@@ -40,7 +40,6 @@ networks: {
 
 ```
 
-'''
 #### Adding smart contract files inside the contracts folder:
 The smart contract is  iot_blockchain.sol.
 This is a draft solidity contract that has the functionality of the following:
