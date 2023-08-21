@@ -23,7 +23,7 @@ command : truffle init
 Need to change the test blockchain, which is in this case Ganache.
 The truffle-config.js files should the following block codes enabled and modified:
 
-'''
+```
 contracts_build_directory: "./client/src/contracts", // This will create the build folder under frontend(client) folder
 networks: {
     // Useful for testing. The `development` name is special - truffle uses it by default
@@ -38,7 +38,7 @@ networks: {
       network_id: "*", // Any network (default: none)
    },
 
-
+```
 
 '''
 #### Adding smart contract files inside the contracts folder:
