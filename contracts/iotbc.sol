@@ -26,12 +26,18 @@ contract SensorRanking {
     }
 
     function calculateWeight(int moisture, int ph) private pure returns (int) {
-        int moistureWeight = (3000 <= moisture && moisture <= 10000) ? int(100) : int(-100);
+        int moistureWeight = (3000 <= moisture && moisture <= 10000)
+            ? int(100)
+            : int(-100);
         int phWeight = (5500 <= ph && ph <= 6500) ? int(50) : int(-50);
         return moistureWeight + phWeight;
     }
 
-    function addSensorReading(string memory sensorId, int moisture, int ph) public {
+    function addSensorReading(
+        string memory sensorId,
+        int moisture,
+        int ph
+    ) public {
         int weight = calculateWeight(moisture, ph);
 
         if (sensorIndex[sensorId] > 0) {
@@ -50,9 +56,9 @@ contract SensorRanking {
 
     function sortSensors() public {
         uint n = sensors.length;
-        for(uint i = 0; i < n; i++) {
-            for(uint j = 0; j < n - i - 1; j++) {
-                if(sensors[j].totalWeight < sensors[j + 1].totalWeight) {
+        for (uint i = 0; i < n; i++) {
+            for (uint j = 0; j < n - i - 1; j++) {
+                if (sensors[j].totalWeight < sensors[j + 1].totalWeight) {
                     Sensor memory temp = sensors[j];
                     sensors[j] = sensors[j + 1];
                     sensors[j + 1] = temp;
@@ -68,7 +74,7 @@ contract SensorRanking {
     function getSensor(uint index) public view returns (string memory, int) {
         return (sensors[index].sensorId, sensors[index].totalWeight);
     }
-    
+
     function getSortedSensors() public view returns (string[] memory) {
         string[] memory sensorIds = new string[](sensors.length);
         for (uint i = 0; i < sensors.length; i++) {
@@ -81,4 +87,3 @@ contract SensorRanking {
         return centralWeightPool;
     }
 }
-
