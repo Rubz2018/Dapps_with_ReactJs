@@ -25,15 +25,12 @@ function App() {
     provider && fetchNetworkData();
   }, []);
 
-  console.log("state------------",state)
-
   useEffect(() => {
     async function readData() {
       try {
         const { contract } = state; // Use the contract directly from the state
         if (contract) {
           const data1 = await contract.methods.getCentralWeightPool().call();
-          console.log("data1--------- ",data1);
           setData(data1.toString());
         }
       } catch (error) {
@@ -47,8 +44,9 @@ function App() {
   console.log("data-----------",data)
 
   return (
-    <div className="App">
-      <p>Test</p>
+    <div className="flex flex-col justify-center">
+      <p className="text-9xl font-bold">Dapp with ReactJS</p>
+      <p className="text-9xl font-bold">The data is: {data}</p>
     </div>
   );
 }
