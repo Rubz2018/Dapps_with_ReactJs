@@ -1,6 +1,7 @@
 import Web3 from "web3";
 import {useState, useEffect} from "react";
 import SensorRanking from "./contracts/SensorRanking.json";
+
 import './App.css';
 
 function App() {
@@ -41,7 +42,17 @@ function App() {
     readData();
   }, [state]);
 
-  console.log("data-----------",data)
+  async function writeData(){
+    try{
+      const {contract} = state;
+      const data = document.querySelector('#value').value;
+      await contract.methods.setter(data).send({from:"0x438539F1B1626e347B6e615e3d1C3FE1c14cEC7E"});
+      window.location.reload();
+
+    }catch (error) {
+      console.error("Error writting data:", error);
+    }
+  }
 
   return (
     <div className="flex flex-col justify-center">
