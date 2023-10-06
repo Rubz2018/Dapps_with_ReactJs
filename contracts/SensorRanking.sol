@@ -11,19 +11,19 @@ contract SensorRanking {
     mapping(string => uint) public sensorIndex;
     uint public centralWeightPool = 50000;
 
-    // constructor() {
-    //     addSensorReading("Sensor1", 3600, 600);
-    //     addSensorReading("Sensor1", 3500, 650);
-    //     addSensorReading("Sensor1", 3700, 550);
+    constructor() {
+        addSensorReading("Sensor1", 3600, 600);
+        addSensorReading("Sensor1", 3500, 650);
+        addSensorReading("Sensor1", 3700, 550);
 
-    //     addSensorReading("Sensor2", 4000, 700);
-    //     addSensorReading("Sensor2", 3900, 600);
-    //     addSensorReading("Sensor2", 4100, 550);
+        addSensorReading("Sensor2", 4000, 700);
+        addSensorReading("Sensor2", 3900, 600);
+        addSensorReading("Sensor2", 4100, 550);
 
-    //     addSensorReading("Sensor3", 3100, 500);
-    //     addSensorReading("Sensor3", 3000, 600);
-    //     addSensorReading("Sensor3", 3200, 550);
-    // }
+        addSensorReading("Sensor3", 3100, 500);
+        addSensorReading("Sensor3", 3000, 600);
+        addSensorReading("Sensor3", 3200, 550);
+    }
 
     function calculateWeight(int moisture, int ph) private pure returns (int) {
         int moistureWeight = (3000 <= moisture && moisture <= 10000)
@@ -54,7 +54,8 @@ contract SensorRanking {
         }
     }
 
-    function sortSensors() public {
+    // edited the code so that the function sorts the array and returns it
+    function sortSensors() public returns (Sensor[] memory) {
         uint n = sensors.length;
         for (uint i = 0; i < n; i++) {
             for (uint j = 0; j < n - i - 1; j++) {
@@ -65,6 +66,7 @@ contract SensorRanking {
                 }
             }
         }
+        return sensors;
     }
 
     function getSensorCount() public view returns (uint) {
@@ -75,12 +77,14 @@ contract SensorRanking {
         return (sensors[index].sensorId, sensors[index].totalWeight);
     }
 
-    function getSortedSensors() public view returns (string[] memory) {
-        string[] memory sensorIds = new string[](sensors.length);
+    // edited the code so that we return both sensorID and the totalWeight of the sensors not just the IDs
+    function getSortedSensors() public view returns (Sensor[] memory) {
+        Sensor[] memory sensorDatas = new Sensor[](sensors.length);
         for (uint i = 0; i < sensors.length; i++) {
-            sensorIds[i] = sensors[i].sensorId;
+            sensorDatas[i].sensorId = sensors[i].sensorId;
+            sensorDatas[i].totalWeight = sensors[i].totalWeight;
         }
-        return sensorIds;
+        return sensorDatas;
     }
 
     function getCentralWeightPool() public view returns (uint) {
